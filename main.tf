@@ -1,13 +1,17 @@
 resource "proxmox_virtual_environment_container" "lxc" {
   node_name = var.target_node
-
-  vm_id = var.vm_id
+  vm_id     = var.vm_id
 
   name        = var.hostname
   description = "Managed by Terraform via Semaphore"
 
-  ostemplate = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
+  # ==================== Operating System ====================
+  operating_system {
+    template_file_id = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
+    type             = "debian"
+  }
 
+  # ==================== CPU & Memory ====================
   cpu {
     cores = var.cores
   }
@@ -16,11 +20,13 @@ resource "proxmox_virtual_environment_container" "lxc" {
     dedicated = var.memory
   }
 
+  # ==================== Root Disk ====================
   disk {
     datastore_id = "local-lvm"
     size         = var.disk_size
   }
 
+  # ==================== Network ====================
   network_interface {
     name    = "eth0"
     bridge  = "vmbr0"
@@ -34,5 +40,8 @@ resource "proxmox_virtual_environment_container" "lxc" {
     }
   }
 
-  tags = ["terraform", "lxc"]
+  unprivileged = true
+  started      = true
+
+  tags = ["terraform", "lxc", "debian"]
 }
