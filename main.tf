@@ -10,37 +10,26 @@ resource "proxmox_virtual_environment_container" "labs" {
   for_each = local.students
 
   node_name = var.target_node
-  vm_id     = each.value.id
 
   description = "Managed by Terraform via Semaphore"
-
-  # ==================== Operating System ====================
-  operating_system {
-    template_file_id = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
-    type             = "debian"
+  
+ clone {
+    vm_id = pve.104
   }
 
-  # ==================== CPU & Memory ====================
-  cpu {
-    cores = var.cores
+  agent {
+    # NOTE: The agent is installed and enabled as part of the cloud-init configuration in the template VM, see cloud-config.tf
+    # The working agent is *required* to retrieve the VM IP addresses.
+    # If you are using a different cloud-init configuration, or a different clone source
+    # that does not have the qemu-guest-agent installed, you may need to disable the `agent` below and remove the `vm_ipv4_address` output.
+    # See https://bpg.sh/docs/resources/virtual_environment_vm#qemu-guest-agent for more details.
+    enabled = true
   }
 
   memory {
     dedicated = var.memory
   }
 
-  # ==================== Root Disk ====================
-  disk {
-    datastore_id = "local-lvm"
-    size         = var.disk_size
-  }
-
-  # ==================== Network ====================
-  network_interface {
-    name    = "eth0"
-    bridge  = "vmbr0"
-    enabled = true
-  }
  # Other useful settings
   unprivileged = true
   started      = true
@@ -51,10 +40,6 @@ resource "proxmox_virtual_environment_container" "labs" {
   initialization {
 
     hostname = "lab-${each.key}"
-
-    user_account {
-      password = var.student_password  # Or disable password
-    }
 
     ip_config {
       ipv4 {
