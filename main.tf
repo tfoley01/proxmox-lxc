@@ -1,6 +1,17 @@
-resource "proxmox_virtual_environment_container" "lxc" {
+locals {
+  students = {
+    "alice" = { id = 1101, ip = "192.168.10.101/24" }
+    "bob"   = { id = 1102, ip = "192.168.10.102/24" }
+    # ...
+  }
+}
+
+resource "proxmox_virtual_environment_container" "labs" {
+  for_each = local.students
+
   node_name = var.target_node
-  vm_id     = var.vm_id
+  vm_id     = each.value.id
+
   description = "Managed by Terraform via Semaphore"
 
   # ==================== Operating System ====================
@@ -35,4 +46,30 @@ resource "proxmox_virtual_environment_container" "lxc" {
   started      = true
 
   tags = ["terraform", "lxc", "debian"]
+
+  # Initialization (Cloud-Init style for LXC)
+  initialization {
+
+    hostname = "lab-${each.key}"
+
+    user_account {
+      password = var.student_password  # Or disable password
+    }
+
+    ip_config {
+      ipv4 {
+        address = "${each.value.ip}"
+        gateway = var.gateway
+      }
+    }
+
+    dns {
+      servers = ["8.8.8.8", "1.1.1.1"]
+    }
+  }
+
+  # Other useful settings
+  unprivileged = true
+  started      = true
+  on_boot      = true
 }
