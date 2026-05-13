@@ -42,11 +42,6 @@ resource "proxmox_virtual_environment_container" "labs" {
     enabled = true
   }
 
-  unprivileged = true
-  started      = true
-
-  tags = ["terraform", "lxc", "debian"]
-
   # Initialization (Cloud-Init style for LXC)
   initialization {
 
@@ -72,4 +67,7 @@ resource "proxmox_virtual_environment_container" "labs" {
   unprivileged = true
   started      = true
   on_boot      = true
+
+  tags = ["terraform", "lxc", "debian"]
+
 }
