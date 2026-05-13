@@ -30,7 +30,7 @@ timeout_create = 3600
 
  # Other useful settings
   unprivileged = true
-  started      = true
+  started      = false
 
   tags = ["terraform", "lxc", "debian"]
 
