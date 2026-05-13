@@ -6,7 +6,7 @@ resource "proxmox_virtual_environment_container" "lxc" {
   name        = var.hostname
   description = "Managed by Terraform via Semaphore"
 
-  ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+  ostemplate = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
 
   cpu {
     cores = var.cores
