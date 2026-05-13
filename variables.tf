@@ -11,6 +11,11 @@ variable "proxmox_password" {
   sensitive = true
 }
 
+variable "student_password" {
+  type      = string
+  sensitive = true
+}
+
 variable "target_node" {
   type    = string
   default = "pve"
