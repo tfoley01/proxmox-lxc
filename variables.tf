@@ -32,17 +32,17 @@ variable "hostname" {
 
 variable "cores" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "memory" {
   type    = number
-  default = 2048
+  default = 512
 }
 
 variable "disk_size" {
   type    = string
-  default = "32"
+  default = "8"
 }
 
 variable "ip_address" {
