@@ -32,13 +32,6 @@ resource "proxmox_virtual_environment_container" "lxc" {
     enabled = true
   }
 
-  ip_config {
-    ipv4 {
-      address = var.ip_address
-      gateway = var.gateway
-    }
-  }
-
   unprivileged = true
   started      = true
 
