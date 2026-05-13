@@ -41,6 +41,12 @@ resource "proxmox_virtual_environment_container" "labs" {
     bridge  = "vmbr0"
     enabled = true
   }
+ # Other useful settings
+  unprivileged = true
+  started      = true
+  on_boot      = true
+
+  tags = ["terraform", "lxc", "debian"]
 
   # Initialization (Cloud-Init style for LXC)
   initialization {
@@ -62,12 +68,4 @@ resource "proxmox_virtual_environment_container" "labs" {
       servers = ["8.8.8.8", "1.1.1.1"]
     }
   }
-
-  # Other useful settings
-  unprivileged = true
-  started      = true
-  on_boot      = true
-
-  tags = ["terraform", "lxc", "debian"]
-
 }
