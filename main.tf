@@ -44,7 +44,6 @@ resource "proxmox_virtual_environment_container" "labs" {
  # Other useful settings
   unprivileged = true
   started      = true
-  on_boot      = true
 
   tags = ["terraform", "lxc", "debian"]
 
