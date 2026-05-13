@@ -22,7 +22,8 @@ resource "proxmox_virtual_environment_container" "labs" {
     vm_id = 104
     full = true
   }
-
+timeout_clone = 3600   # 1 hour in seconds (default is 1800)
+timeout_create = 3600
   memory {
     dedicated = var.memory
   }
