@@ -14,7 +14,7 @@ resource "proxmox_virtual_environment_container" "labs" {
   description = "Managed by Terraform via Semaphore"
   
  clone {
-    vm_id = proxmox_virtual_environment_container.csc373.104
+    vm_id = pve.104
   }
 
   agent {
