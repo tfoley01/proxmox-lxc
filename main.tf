@@ -22,6 +22,7 @@ resource "proxmox_virtual_environment_container" "labs" {
   
  clone {
     vm_id = 104
+    full_clone = true
   }
 
   memory {
