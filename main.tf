@@ -53,6 +53,7 @@ resource "proxmox_virtual_environment_container" "labs" {
     hostname = "lab-${each.key}"
 
     user_account {
+      username = "${each.key}"
       password = var.student_password  # Or disable password
     }
 
