@@ -1,7 +1,6 @@
 resource "proxmox_virtual_environment_container" "lxc" {
   node_name = var.target_node
   vm_id     = var.vm_id
-  name        = var.hostname
   description = "Managed by Terraform via Semaphore"
 
   # ==================== Operating System ====================
