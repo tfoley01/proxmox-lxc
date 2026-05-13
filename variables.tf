@@ -46,5 +46,5 @@ variable "ip_address" {
 
 variable "gateway" {
   type    = string
-  default = "192.168.10.1"
+  default = "10.78.0.1"
 }
