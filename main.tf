@@ -15,14 +15,12 @@ locals {
 
 resource "proxmox_virtual_environment_container" "labs" {
   for_each = local.students
-
   node_name = var.target_node
-
   description = "Managed by Terraform via Semaphore"
-  
+  full_clone = true
+
  clone {
     vm_id = 104
-    full_clone = true
   }
 
   memory {
